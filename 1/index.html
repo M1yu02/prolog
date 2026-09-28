@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>月 玲 | 프롤로그</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 50% 20%, #182331 0%, #090d12 45%, #030508 100%);
+            color: #e8edf2;
+            font-family:
+                "Noto Sans KR",
+                "Malgun Gothic",
+                sans-serif;
+            overflow: hidden;
+        }
+
+        /* 전체 화면 */
+        .wrapper {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+
+        /* 메인 뉴스 화면 */
+        .news-page {
+            width: min(920px, 92vw);
+            height: min(700px, 88vh);
+            background: rgba(9, 13, 18, 0.97);
+            border: 1px solid #29323c;
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.65),
+                0 0 60px rgba(60, 100, 130, 0.08);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 뉴스 상단 */
+        .top-bar {
+            height: 64px;
+            min-height: 64px;
+            border-bottom: 1px solid #252d35;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            background: #080b0f;
+        }
+
+        .logo {
+            font-family: serif;
+            font-size: 22px;
+            letter-spacing: 6px;
+            color: #f3f5f7;
+        }
+
+        .logo span {
+            color: #9ca8b3;
+            font-size: 11px;
+            letter-spacing: 2px;
+            margin-left: 8px;
+        }
+
+        .live {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: #c8d0d7;
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        .live-dot {
+            width: 7px;
+            height: 7px;
+            background: #c43b3b;
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(196, 59, 59, 0.7);
+        }
+
+        /* 뉴스 내용 */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 48px 70px 60px;
+            scrollbar-width: thin;
+            scrollbar-color: #39444e transparent;
+        }
+
+        .category {
+            color: #9ca8b3;
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .headline {
+            font-family: "Noto Serif KR", "Batang", serif;
+            font-size: clamp(27px, 4vw, 42px);
+            line-height: 1.45;
+            letter-spacing: -1.5px;
+            margin: 0 0 22px;
+            color: #f4f5f6;
+            font-weight: 600;
+        }
+
+        .headline strong {
+            color: #d7a7a7;
+            font-weight: 600;
+        }
+
+        .meta {
+            display: flex;
+            gap: 18px;
+            color: #68737e;
+            font-size: 11px;
+            border-bottom: 1px solid #242c34;
+            padding-bottom: 18px;
+            margin-bottom: 30px;
+        }
+
+        .article {
+            color: #b8c0c7;
+            font-family: "Noto Serif KR", "Batang", serif;
+            font-size: 16px;
+            line-height: 2.15;
+            letter-spacing: -0.2px;
+        }
+
+        .article p {
+            margin: 0 0 23px;
+        }
+
+        .article .quote {
+            margin: 35px 0;
+            padding: 24px 28px;
+            border-left: 2px solid #596571;
+            background: rgba(255, 255, 255, 0.025);
+            color: #d1d6da;
+            font-size: 15px;
+        }
+
+        .article .quote small {
+            display: block;
+            margin-top: 12px;
+            color: #66727d;
+            font-family: sans-serif;
+            font-size: 10px;
+        }
+
+        /* 뉴스 카드 */
+        .news-card {
+            border: 1px solid #29333d;
+            background: rgba(255,255,255,0.025);
+            padding: 25px 28px;
+            margin: 30px 0;
+        }
+
+        .news-card-title {
+            font-size: 12px;
+            color: #88939e;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .news-card-main {
+            font-size: 17px;
+            color: #dce1e5;
+            line-height: 1.8;
+        }
+
+        /* 경고 박스 */
+        .warning {
+            border: 1px solid rgba(151, 70, 70, 0.45);
+            background: rgba(90, 30, 30, 0.12);
+            padding: 24px 26px;
+            margin-top: 30px;
+        }
+
+        .warning-title {
+            color: #c98282;
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .warning-text {
+            color: #b7a8a8;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* 소문 스타일 */
+        .rumor {
+            margin: 40px 0;
+            text-align: center;
+            padding: 35px 20px;
+            border-top: 1px solid #252e36;
+            border-bottom: 1px solid #252e36;
+        }
+
+        .rumor-label {
+            color: #697580;
+            font-size: 10px;
+            letter-spacing: 3px;
+            margin-bottom: 18px;
+        }
+
+        .rumor-text {
+            font-family: "Noto Serif KR", "Batang", serif;
+            color: #d3d8dc;
+            font-size: 21px;
+            line-height: 1.8;
+        }
+
+        /* 프롤로그 전환 */
+        .prologue {
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .prologue-number {
+            color: #58636d;
+            font-size: 11px;
+            letter-spacing: 4px;
+            margin-bottom: 28px;
+        }
+
+        .prologue-title {
+            font-family: "Noto Serif KR", "Batang", serif;
+            font-size: clamp(30px, 5vw, 52px);
+            line-height: 1.5;
+            margin: 0 0 35px;
+            color: #f0f1f2;
+            font-weight: 500;
+        }
+
+        .prologue-title em {
+            color: #a8b3bc;
+            font-style: normal;
+        }
+
+        .prologue-text {
+            font-family: "Noto Serif KR", "Batang", serif;
+            font-size: 16px;
+            line-height: 2.3;
+            color: #9fa9b2;
+            max-width: 720px;
+        }
+
+        /* 마지막 */
+        .ending {
+            text-align: center;
+            min-height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .ending-symbol {
+            font-family: serif;
+            font-size: 55px;
+            color: #c4ccd2;
+            margin-bottom: 30px;
+            letter-spacing: 10px;
+        }
+
+        .ending-title {
+            font-family: serif;
+            font-size: 32px;
+            letter-spacing: 8px;
+            margin-bottom: 18px;
+        }
+
+        .ending-sub {
+            color: #65717c;
+            font-size: 11px;
+            letter-spacing: 3px;
+        }
+
+        /* 하단 컨트롤 */
+        .controls {
+            height: 72px;
+            min-height: 72px;
+            border-top: 1px solid #252d35;
+            background: #080b0f;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 25px;
+        }
+
+        .page-count {
+            color: #5e6974;
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            border: 1px solid #333d47;
+            background: #10151b;
+            color: #aeb7be;
+            padding: 11px 20px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 11px;
+            transition: 0.2s ease;
+        }
+
+        button:hover:not(:disabled) {
+            background: #1a222a;
+            border-color: #596672;
+            color: #ffffff;
+        }
+
+        button:disabled {
+            opacity: 0.25;
+            cursor: default;
+        }
+
+        /* 페이지 전환 */
+        .fade {
+            animation: fadePage 0.35s ease;
+        }
+
+        @keyframes fadePage {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 모바일 */
+        @media (max-width: 650px) {
+
+            .wrapper {
+                padding: 10px;
+            }
+
+            .news-page {
+                width: 100%;
+                height: 94vh;
+            }
+
+            .top-bar {
+                padding: 0 18px;
+            }
+
+            .content {
+                padding: 35px 25px 45px;
+            }
+
+            .headline {
+                font-size: 27px;
+            }
+
+            .article {
+                font-size: 15px;
+            }
+
+            .controls {
+                padding: 0 15px;
+            }
+
+            button {
+                padding: 10px 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <main class="news-page">
+
+        <!-- 상단 뉴스바 -->
+        <header class="top-bar">
+
+            <div class="logo">
+                月 玲
+                <span>NEWS ARCHIVE</span>
+            </div>
+
+            <div class="live">
+                <span class="live-dot"></span>
+                ARCHIVE
+            </div>
+
+        </header>
+
+
+        <!-- 페이지 내용 -->
+        <section class="content" id="content">
+        </section>
+
+
+        <!-- 하단 버튼 -->
+        <footer class="controls">
+
+            <div class="page-count" id="pageCount">
+                01 / 09
+            </div>
+
+            <div class="buttons">
+
+                <button id="prevBtn" onclick="previousPage()">
+                    ← 이전
+                </button>
+
+                <button id="nextBtn" onclick="nextPage()">
+                    다음 →
+                </button>
+
+            </div>
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+<script>
+
+const pages = [
+
+    /* 1 */
+    `
+    <div class="fade">
+
+        <div class="category">
+            SOCIETY · LOCAL NEWS
+        </div>
+
+        <h1 class="headline">
+            최근 들어 <strong>사람들이 사라지고 있다.</strong>
+        </h1>
+
+        <div class="meta">
+            <span>2026. 09. 28</span>
+            <span>지역 사회</span>
+            <span>기자 김○○</span>
+        </div>
+
+        <div class="article">
+
+            <p>
+                최근 한 달 사이, 인근 지역에서 발생한 실종 신고가
+                평소보다 크게 증가한 것으로 확인됐다.
+            </p>
+
+            <p>
+                실종자 대부분은 마지막으로 목격된 장소가
+                도시 외곽에 위치한 산림 지역이라는 공통점을 가지고 있었다.
+            </p>
+
+            <div class="news-card">
+
+                <div class="news-card-title">
+                    BREAKING NEWS
+                </div>
+
+                <div class="news-card-main">
+                    경찰은 현재 실종 사건 사이의 연관성을 조사하고 있으며,
+                    일부 산림 지역에 대한 야간 출입을 자제해 달라고 당부했다.
+                </div>
+
+            </div>
+
+            <p>
+                그러나 이상한 점이 하나 있었다.
+            </p>
+
+            <p>
+                실종자들의 휴대전화와 소지품은 발견되는 경우가 있었지만,
+                정작 당사자의 흔적은 어디에서도 발견되지 않았다.
+            </p>
+
+        </div>
+
+    </div>
+    `,
+
+
+    /* 2 */
+    `
+    <div class="fade">
+
+        <div class="category">
+            SOCIETY · MISSING PERSON
+        </div>
+
+        <h1 class="headline">
+            실종자들의 마지막 행선지는<br>
+            모두 <strong>같은 산</strong>이었다.
+        </h1>
+
+        <div class="meta">
+            <span>2026. 09. 25</span>
+            <span>사회</span>
+            <span>현장 취재</span>
+        </div>
+
+        <div class="article">
+
+            <p>
+                경찰 조사 결과 지금까지 확인된 실종 사건 중 일부가
+                같은 산림 지역을 중심으로 발생한 것으로 알려졌다.
+            </p>
+
+            <p>
+                해당 지역은 평소 등산객도 많지 않고,
+                해가 지면 인적이 거의 끊기는 곳이다.
+            </p>
+
+            <div class="warning">
+
+                <div class="warning-title">
+                    POLICE NOTICE
+                </div>
+
+                <div class="warning-text">
+                    야간 시간대 산림 지역에 혼자 진입하는 행위를
+                    삼가 주시기 바랍니다.
+                </div>
+
+            </div>
+
+            <p>
+                하지만 사건에 대한 공식적인 설명은
+                아직 발표되지 않았다.
+            </p>
+
+            <p>
+                그러던 중, 인터넷을 중심으로
+                이상한 이야기가 퍼지기 시작했다.
+            </p>
+
+        </div>
+
+    </div>
+    `,
+
+
+    /* 3 */
+    `
+    <div class="fade">
+
+        <div class="category">
+            LOCAL · UNCONFIRMED REPORT
+        </div>
+
+        <h1 class="headline">
+            숲속에 <strong>무언가가 산다.</strong>
+        </h1>
+
+        <div class="meta">
+            <span>확인되지 않은 제보</span>
+            <span>출처 불명</span>
+        </div>
+
+        <div class="article">
+
+            <p>
+                온라인 커뮤니티에서는 오래전부터
+                해당 산에 관한 이야기가 돌고 있었다.
+            </p>
+
+            <div class="rumor">
+
+                <div class="rumor-label">
+                    UNVERIFIED RUMOR
+                </div>
+
+                <div class="rumor-text">
+                    "밤이 되면 숲 안쪽에서<br>
+                    사람의 것이 아닌 울음소리가 들린다."
+                </div>
+
+            </div>
+
+            <p>
+                어떤 사람은 그것을 야생동물이라고 했고,
+                또 다른 사람은 오래된 전설에 등장하는
+                요괴일지도 모른다고 말했다.
+            </p>
+
+            <p>
+                물론 그것을 직접 확인한 사람은 없었다.
+            </p>
+
+            <p>
+                적어도,
+                그때까지는.
+            </p>
+
+        </div>
+
+    </div>
+    `,
+
+
+    /* 4 */
+    `
+    <div class="fade">
+
+        <div class="category">
+            LOCAL · WITNESS REPORT
+        </div>
+
+        <h1 class="headline">
+            "숲에서 <strong>사람처럼 생긴 무언가</strong>를 봤어요."
+        </h1>
+
+        <div class="meta">
+            <span>목격자 인터뷰</span>
+            <span>신원 비공개</span>
+        </div>
+
+        <div class="article">
+
+            <p>
+                지난주 산 인근을 방문했다는 한 목격자는
+                숲속에서 이상한 형체를 봤다고 주장했다.
+            </p>
+
+            <div class="quote">
+
+                "처음에는 사람이 서 있는 줄 알았어요."
+
+                <small>
+                    ― 산림 인근 방문객 A씨
+                </small>
+
+            </div>
+
+            <div class="quote">
+
+                "그런데 가까이 보니까...
+                뒤에 뭔가가 여러 개 달려 있었어요."
+
+                <small>
+                    ― 산림 인근 방문객 A씨
+                </small>
+
+            </div>
+
+            <p>
+                목격자는 그것이 무엇이었는지 설명할 수 없었다고 말했다.
+            </p>
+
+            <p>
+                경찰은 해당 제보에 대해
+                "현재 확인된 사실은 없다"고 밝혔다.
+            </p>
+
+        </div>
+
+    </div>
+    `,
+
+
+    /* 5 */
+    `
+    <div class="fade">
+
+        <div class="prologue">
+
+            <div class="prologue-number">
+                PROLOGUE · 01
+            </div>
+
+            <h1 class="prologue-title">
+                그리고 그날,<br>
+                나는 <em>숲에 들어갔다.</em>
+            </h1>
+
+            <div class="prologue-text">
+
+                <p>
+                    처음부터 들어갈 생각은 없었다.
+                </p>
+
+                <p>
+                    단지 조금 늦었을 뿐이었다.
+                </p>
+
+                <p>
+                    평소 다니던 길이라고 생각했고,
+                    조금 돌아가면 금방 빠져나올 수 있을 거라고 생각했다.
+                </p>
+
+                <p>
+                    하지만 어느 순간부터
+                    주변의 풍경이 낯설어지기 시작했다.
+                </p>
+
+                <p>
+                    같은 나무.
+                    같은 길.
+                    같은 풍경.
+                </p>
+
+                <p>
+                    아무리 걸어도,
+                    내가 지나온 곳으로 돌아갈 수 없었다.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+    `,
+
+
+    /* 6 */
+    `
+    <div class="fade">
+
+        <div class="prologue">
+
+            <div class="prologue-number">
+                PROLOGUE · 02
+            </div>
+
+            <h1 class="prologue-title">
+                휴대전화의 화면에는<br>
+                <em>신호가 없었다.</em>
+            </h1>
+
+            <div class="prologue-text">
+
+                <p>
+                    "하필 지금..."
+                </p>
+
+                <p>
+                    화면을 몇 번이고 새로고침해 봤지만
+                    통신 신호는 돌아오지 않았다.
+                </p>
+
+                <p>
+                    배터리는 얼마 남지 않았고,
+                    주변에는 사람의 흔적조차 보이지 않았다.
+                </p>
+
+                <p>
+                    그제야 조금 불안해졌다.
+                </p>
+
+                <p>
+                    해가 완전히 지기 전에
+                    이곳에서 빠져나가야 했다.
+                </p>
+
+                <p>
+                    나는 무작정 한쪽 방향을 향해 걷기 시작했다.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+    `,
+
+
+    /* 7 */
+    `
+    <div class="fade">
+
+        <div class="prologue">
+
+            <div class="prologue-number">
+                PROLOGUE · 03
+            </div>
+
+            <h1 class="prologue-title">
+                그때였다.
+            </h1>
+
+            <div class="prologue-text">
+
+                <p>
+                    바스락.
+                </p>
+
+                <p>
+                    바로 뒤에서 나뭇잎이 흔들리는 소리가 들렸다.
+                </p>
+
+                <p>
+                    나는 걸음을 멈췄다.
+                </p>
+
+                <p>
+                    주변을 둘러봤지만 아무것도 보이지 않았다.
+                </p>
+
+                <p>
+                    다시 걸으려던 순간,
+                    이번에는 분명하게 목소리가 들렸다.
+                </p>
+
+                <div class="rumor">
+
+                    <div class="rumor-label">
+                        UNKNOWN VOICE
+                    </div>
+
+                    <div class="rumor-text">
+                        "이 시간에 인간이 여긴 웬일이래?"
+                    </div>
+
+                </div>
+
+                <p>
+                    나는 천천히 뒤를 돌아봤다.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+    `,
+
+
+    /* 8 */
+    `
+    <div class="fade">
+
+        <div class="prologue">
+
+            <div class="prologue-number">
+                PROLOGUE · 04
+            </div>
+
+            <h1 class="prologue-title">
+                그곳에<br>
+                <em>누군가가 서 있었다.</em>
+            </h1>
+
+            <div class="prologue-text">
+
+                <p>
+                    어둠 속에서 모습을 드러낸 것은
+                    낯선 소녀였다.
+                </p>
+
+                <p>
+                    새하얀 머리카락.
+                </p>
+
+                <p>
+                    그리고 달빛을 받아
+                    이상할 정도로 선명하게 빛나는 눈동자.
+                </p>
+
+                <p>
+                    처음에는 그저 길을 지나던 사람이라고 생각했다.
+                </p>
+
+                <p>
+                    하지만 곧,
+                    내가 알고 있는 인간과는
+                    확실히 다른 무언가가 있다는 것을 깨달았다.
+                </p>
+
+                <p>
+                    그녀의 뒤에서
+                    천천히 흔들리고 있는 것.
+                </p>
+
+                <p>
+                    그것은 분명,
+                    하나가 아니었다.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+    `,
+
+
+    /* 9 */
+    `
+    <div class="fade">
+
+        <div class="ending">
+
+            <div class="ending-symbol">
+                月 玲
+            </div>
+
+            <div class="ending-title">
+                프롤로그
+            </div>
+
+            <div class="ending-sub">
+                THE STORY BEGINS
+            </div>
+
+        </div>
+
+    </div>
+
+    `
+
+];
+
+
+let currentPage = 0;
+
+
+const content = document.getElementById("content");
+const pageCount = document.getElementById("pageCount");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+
+function renderPage() {
+
+    content.innerHTML = pages[currentPage];
+
+    pageCount.textContent =
+        String(currentPage + 1).padStart(2, "0")
+        + " / "
+        + String(pages.length).padStart(2, "0");
+
+    prevBtn.disabled = currentPage === 0;
+
+    if (currentPage === pages.length - 1) {
+        nextBtn.textContent = "처음으로 ↻";
+    } else {
+        nextBtn.textContent = "다음 →";
+    }
+
+    content.scrollTop = 0;
+}
+
+
+function nextPage() {
+
+    if (currentPage < pages.length - 1) {
+
+        currentPage++;
+
+    } else {
+
+        currentPage = 0;
+
+    }
+
+    renderPage();
+}
+
+
+function previousPage() {
+
+    if (currentPage > 0) {
+
+        currentPage--;
+
+        renderPage();
+
+    }
+
+}
+
+
+/* 키보드 조작 */
+
+document.addEventListener("keydown", function(event) {
+
+    if (event.key === "ArrowRight") {
+        nextPage();
+    }
+
+    if (event.key === "ArrowLeft") {
+        previousPage();
+    }
+
+});
+
+
+/* 시작 */
+
+renderPage();
+
+</script>
+
+</body>
+</html>
